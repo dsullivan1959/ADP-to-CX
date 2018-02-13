@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+<EncryptedData Id="EncryptedElement1" Type="http://www.w3.org/2001/04/xmlenc#Element" xmlns="http://www.w3.org/2001/04/xmlenc#"><EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" /><KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#"><EncryptedKey xmlns="http://www.w3.org/2001/04/xmlenc#"><EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5" /><KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#"><KeyName>rsaKey</KeyName></KeyInfo><CipherData><CipherValue>N/cTNt/SHnIDi4LjZqGA032W4CCkHSD6i7qT9wHPoHSNT90Y6waxaxFiZGAgU4KclPwdCIBM75YomtBhC7xd+VEt/1AzCkelKRQ91xLynursyc9zinMV7NoBzCobLk5hZzF5nMExHKp0s0y+XFq0aEWE8ckz5wfbNX2UcIxrs/4=</CipherValue></CipherData><ReferenceList><DataReference URI="#EncryptedElement1" /></ReferenceList></EncryptedKey></KeyInfo><CipherData><CipherValue>bM1EvfsjmY3y/suwX+pFBokU2/5+cZlqni3gS6Wbhd0tB13xRF1VuzeaLD80s//4mptjs3FqYEXFJtNGLulZc6WTtZeHAjB+ClKNSuPiLGUSHBsPT+Ck2akoQr8/UWj0Su46tQ5BWpRt4DIfn1f2Vzu0eEHBusA34i3fu799nQ3HrWLODCfZfcZj+anL8UOMubAdYAqLeg0yCe1WU1xQn97r119iabTm/ajMHHKQLUsHa09cOXRIxTNSdELefrW9rFRIYI2jLismxt8J+pzxcg==</CipherValue></CipherData></EncryptedData>
+
+</root>
+
+
