@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+
+<connectionString>Dsn=train;Driver=IBM INFORMIX ODBC 	DRIVER;Host=10.2.6.18;Server=wilson;Service=istarcars;Protocol=onsoctcp;Database=train;Uid=ccmsuser;Pwd=1c@cc3M2017;</connectionString>
+
+<FTPHost>sftp.carthage.edu</FTPHost>
+<FTPUser>adpftp</FTPUser>
+<FTPPwd>"Ljbw'y2/Q@JZ" & Chr(34) & "j!x</FTPPwd>
+<FTPKey>ssh-ed25519 256 geekVbRNK4cajjjmZjo0GSRM3grz1oYJRcUNIBN+KHo=</FTPKey>
+
+</root>
+
+

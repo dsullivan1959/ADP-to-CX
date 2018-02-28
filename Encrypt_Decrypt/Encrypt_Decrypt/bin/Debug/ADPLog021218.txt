@@ -1,0 +1,72 @@
+Update of Basic name related info in ID record for May, Jacqueline Jo, ID = 1104705, 02/12/2018 12:02:10
+Update of EMAIL2 completed for , 1104705, AA = EML2, Detail = jmay37@gmail.com, 02/12/2018 12:02:10
+Add of cell phone to AA_Rec completed for May, Jacqueline Jo, ID = 1104705, AA = CELL, Detail = (262) 358-1571, 02/12/2018 12:02:10
+Update of Profile record forMay, Jacqueline Jo, ID =1104705, Race = WH, Ethnicity = , 02/12/2018 12:02:10
+Update of CVID_Rec completed for May, Jacqueline Jo, ID = 1104705, ADP ID inserted as 004705, 02/12/2018 12:02:10
+Update of AA_Rec completed for , ID = 1104705, AA = SCHL, Detail = May, Jacqueline Jo, 02/12/2018 12:02:11
+
+Update of Basic name related info in ID record for May, Jacqueline Jo, ID = 1104705, 02/12/2018 12:02:11
+Update of EMAIL2 completed for , 1104705, AA = EML2, Detail = jmay37@gmail.com, 02/12/2018 12:02:11
+Add of cell phone to AA_Rec completed for May, Jacqueline Jo, ID = 1104705, AA = CELL, Detail = (262) 358-1571, 02/12/2018 12:02:11
+Update of Profile record forMay, Jacqueline Jo, ID =1104705, Race = WH, Ethnicity = , 02/12/2018 12:02:11
+Update of CVID_Rec completed for May, Jacqueline Jo, ID = 1104705, ADP ID inserted as 004705, 02/12/2018 12:02:11
+Add of Job_Rec completed for May, Jacqueline Jo,  ID number 1104705, Title = Admin Asst - Ath, HRPay = K97, tPos_No = 2380, Begin Date = 07-24-2017, 02/12/2018 12:02:11
+Update of func_area record for Position 2380, Descr = Admin Asst - Ath, Function Code = 205, PCN = HRL-ATDR-ATH-AA, 02/12/2018 12:02:11
+
+Update of Basic name related info in ID record for May, Jacqueline Jo, ID = 1104705, 02/12/2018 12:02:12
+Update of EMAIL2 completed for , 1104705, AA = EML2, Detail = jmay37@gmail.com, 02/12/2018 12:02:12
+Add of cell phone to AA_Rec completed for May, Jacqueline Jo, ID = 1104705, AA = CELL, Detail = (262) 358-1571, 02/12/2018 12:02:12
+Update of Profile record forMay, Jacqueline Jo, ID =1104705, Race = WH, Ethnicity = , 02/12/2018 12:02:12
+Update of CVID_Rec completed for May, Jacqueline Jo, ID = 1104705, ADP ID inserted as 004705, 02/12/2018 12:02:12
+Add of Job_Rec completed for May, Jacqueline Jo,  ID number 1104705, Title = Admin Asst - Ath, HRPay = K97, tPos_No = 2380, Begin Date = 07-24-2017, 02/12/2018 12:02:12
+Update of func_area record for Position 2380, Descr = Admin Asst - Ath, Function Code = 205, PCN = HRL-ATDR-ATH-AA, 02/12/2018 12:02:12
+
+Update of Basic name related info in ID record for May, Jacqueline Jo, ID = 1104705, 02/12/2018 12:02:12
+Update of EMAIL2 completed for , 1104705, AA = EML2, Detail = jmay37@gmail.com, 02/12/2018 12:02:12
+Add of cell phone to AA_Rec completed for May, Jacqueline Jo, ID = 1104705, AA = CELL, Detail = (262) 358-1571, 02/12/2018 12:02:12
+Update of Profile record forMay, Jacqueline Jo, ID =1104705, Race = WH, Ethnicity = , 02/12/2018 12:02:12
+Update of CVID_Rec completed for May, Jacqueline Jo, ID = 1104705, ADP ID inserted as 004705, 02/12/2018 12:02:12
+Add of Job_Rec completed for May, Jacqueline Jo,  ID number 1104705, Title = Admin Asst - Ath, HRPay = K97, tPos_No = 2380, Begin Date = 07-24-2017, 02/12/2018 12:02:13
+Update of func_area record for Position 2380, Descr = Admin Asst - Ath, Function Code = 205, PCN = HRL-ATDR-ATH-AA, 02/12/2018 12:02:13
+
+Update of Basic name related info in ID record for May, Jacqueline Jo, ID = 1104705, 02/12/2018 12:02:13
+Update of EMAIL2 completed for , 1104705, AA = EML2, Detail = jmay37@gmail.com, 02/12/2018 12:02:13
+Add of cell phone to AA_Rec completed for May, Jacqueline Jo, ID = 1104705, AA = CELL, Detail = (262) 358-1571, 02/12/2018 12:02:13
+Update of Profile record forMay, Jacqueline Jo, ID =1104705, Race = WH, Ethnicity = , 02/12/2018 12:02:13
+Update of CVID_Rec completed for May, Jacqueline Jo, ID = 1104705, ADP ID inserted as 004705, 02/12/2018 12:02:13
+Update of AA_Rec completed for , ID = 1104705, AA = SCHL, Detail = May, Jacqueline Jo, 02/12/2018 12:02:13
+
+Update of Basic name related info in ID record for May, Jacqueline Jo, ID = 1104705, 02/12/2018 12:02:13
+Update of EMAIL2 completed for , 1104705, AA = EML2, Detail = jmay37@gmail.com, 02/12/2018 12:02:14
+Add of cell phone to AA_Rec completed for May, Jacqueline Jo, ID = 1104705, AA = CELL, Detail = (262) 358-1571, 02/12/2018 12:02:14
+Update of Profile record forMay, Jacqueline Jo, ID =1104705, Race = WH, Ethnicity = , 02/12/2018 12:02:14
+Update of CVID_Rec completed for May, Jacqueline Jo, ID = 1104705, ADP ID inserted as 004705, 02/12/2018 12:02:14
+Update of AA_Rec completed for , ID = 1104705, AA = SCHL, Detail = May, Jacqueline Jo, 02/12/2018 12:02:14
+
+
+
+Update of Basic name related info in ID record for Stirn-Heidingsfelder, Susan A., ID = 1350800, 02/12/2018 12:02:14
+Update of EMAIL2 completed for , 1350800, AA = EML2, Detail = sueheidingsfelder@gmail.com, 02/12/2018 12:02:14
+Add of cell phone to AA_Rec completed for Stirn-Heidingsfelder, Susan A., ID = 1350800, AA = CELL, Detail = (262) 914-8723, 02/12/2018 12:02:14
+Update of Profile record forStirn-Heidingsfelder, Susan A., ID =1350800, Race = WH, Ethnicity = , 02/12/2018 12:02:14
+Update of CVID_Rec completed for Stirn-Heidingsfelder, Susan A., ID = 1350800, ADP ID inserted as 350800, 02/12/2018 12:02:15
+Add of Job_Rec completed for Stirn-Heidingsfelder, Susan A.,  ID number 1350800, Title = Tarble Arena Media, HRPay = K97, tPos_No = 2961, Begin Date = 02-28-2017, 02/12/2018 12:02:15
+Update of func_area record for Position 2961, Descr = Tarble Arena Media, Function Code = 305, PCN = HRL-VPIA-COMM-ARENA, 02/12/2018 12:02:15
+Add of alternate address completed for ID number , 1350800, AA = SCHL, Detail = Stirn-Heidingsfelder, Susan A., 02/12/2018 12:02:15
+
+Update of Basic name related info in ID record for Espinosa, Carrie L., ID = 1413827, 02/12/2018 12:02:15
+Add of alternate address completed for ID number Espinosa, Carrie L., 1413827, AA = PREV, Detail = 10832 64th Street, 02/12/2018 12:02:15
+Update of Address info in ID record for Espinosa, Carrie L., ID = 1413827, Addr = 10832 64th St  , Kenosha, WI, 53142, 02/12/2018 12:02:15
+Update of Profile record forEspinosa, Carrie L., ID =1413827, Race = WH, Ethnicity = , 02/12/2018 12:02:15
+Update of CVID_Rec completed for Espinosa, Carrie L., ID = 1413827, ADP ID inserted as 413827, 02/12/2018 12:02:15
+Add of Job_Rec completed for Espinosa, Carrie L.,  ID number 1413827, Title = Asst Dir for  Advising, HRPay = FVW, tPos_No = 2401, Begin Date = 12-16-2017, 02/12/2018 12:02:16
+Update of func_area record for Position 2401, Descr = Asst Dir for  Advising, Function Code = 357, PCN = ADM-DOS-ADVS-ASDAA, 02/12/2018 12:02:16
+
+Update of Basic name related info in ID record for Larry, Michael, ID = 850974, 02/12/2018 12:02:16
+Add of alternate address completed for ID number Larry, Michael, 850974, AA = PREV, Detail = 3057 Meyer Court, #8, 02/12/2018 12:02:16
+Update of Address info in ID record for Larry, Michael, ID = 850974, Addr = 3057 Meyer Court #8  , Racine, WI, 53406, 02/12/2018 12:02:16
+Update of Profile record forLarry, Michael, ID =850974, Race = BL, Ethnicity = , 02/12/2018 12:02:16
+Update of CVID_Rec completed for Larry, Michael, ID = 850974, ADP ID inserted as 850974, 02/12/2018 12:02:16
+Add of Job_Rec completed for Larry, Michael,  ID number 850974, Title = Academic FY Advisor, HRPay = FVW, tPos_No = 2605, Begin Date = 12-16-2017, 02/12/2018 12:02:17
+Update of func_area record for Position 2605, Descr = Academic FY Advisor, Function Code = 357, PCN = ADM-DOS-ADVS-AFYA, 02/12/2018 12:02:17
+-----------------, 02/12/2018 12:02:17
