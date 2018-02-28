@@ -83,6 +83,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WinSCPnet, Version=1.5.3.8172, Culture=neutral, PublicKeyToken=2271ec4a3c56d0bf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\WinSCPnet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -107,6 +111,7 @@
     <Compile Include="ClsPosTable.vb" />
     <Compile Include="clsPos_rec.vb" />
     <Compile Include="clsProfile_rec.vb" />
+    <Compile Include="clsWinSCP.vb" />
     <Compile Include="cls_CV_IDrec.vb" />
     <Compile Include="EncryptTxt.vb" />
     <Compile Include="frmStatus.Designer.vb">

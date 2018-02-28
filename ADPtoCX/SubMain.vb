@@ -31,6 +31,7 @@ Module SubMain
     Public Sub Main()
 
         Call GetParams()
+        Dim clWSCP As New clsWinSCP
 
         Dim cSM As New SendMessage
         'Dim Msg As String = "test email message"
@@ -48,7 +49,20 @@ Module SubMain
         Dim sArchiveFile As String = Left(gl.FileIn, Len(gl.FileIn) - 4)
         Dim sFullArchiveFileNamePath As String = gl.FileNamePath & "\Archive" & sArchiveFile & Format(d, "MMddyy hhmmss") & ".csv"
 
+        'This gets the csv file from the FTP site
+        Dim iRtn As Integer
+        iRtn = clWSCP.GetCSV
+        If iRtn <> 0 Then
+            WriteError("Remote file not found or SFTP Error")
+            Call EndProgram()
+        End If
+
+
+
+
         If File.Exists(sFullFileNamePath) = True Then
+
+            WriteLog("-----------------")
 
             Call QryCSV()
 
@@ -364,6 +378,10 @@ Module SubMain
             'Maybe they can submit as a pipe delimited file
             'If not, 
             Row1 = String.Empty
+
+
+            WriteLog("-----------Processing:" & fileFields(6) & ", ADP File: " & fileFields(0) & ", CX ID: " & fileFields(1))
+
 
             'Assumption should be that the ID exists in the ID_Rec table
             iCarthId = 0  'initialize test variable
@@ -1488,6 +1506,33 @@ Module SubMain
         RemoveQuotes = Trim(sRetVal)
     End Function
 
+    Public Function FixQuotes(ByVal sValue As String) As String
+        Dim sRetVal As String
+        Dim QuoteTest As Boolean
+
+        sRetVal = sValue
+        QuoteTest = True
+
+        While QuoteTest = True
+            If Left(sRetVal, 1) = Chr(34) Then
+                sRetVal = Chr(34) & Chr(34)
+            Else
+                QuoteTest = False
+            End If
+        End While
+
+        'QuoteTest = True
+        'While QuoteTest = True
+        '    If Right(sRetVal, 1) = Chr(34) Then
+        '        sRetVal = Left(sRetVal, Len(sRetVal) - 1)
+        '    Else
+        '        QuoteTest = False
+        '    End If
+        'End While
+
+        FixQuotes = Trim(sRetVal)
+    End Function
+
 
     Public Sub WriteLog(ByVal msg As String)
         FileOpen(10, My.Application.Info.DirectoryPath & "\ADPLog.txt", OpenMode.Append)
@@ -1592,7 +1637,7 @@ Module SubMain
         Dim rsaKey As New RSACryptoServiceProvider(cspParams)
         Try
             xmlDoc.PreserveWhitespace = True
-            xmlDoc.Load("connect.xml")   'In the bin/debug folder
+            xmlDoc.Load("connect - copy.xml")   'In the bin/debug folder
 
             'DECRYPT
             clsEncryption.Decrypt(xmlDoc, rsaKey, "rsaKey")
@@ -1605,9 +1650,24 @@ Module SubMain
             Dim elemList As XmlNodeList = xmlDoc.GetElementsByTagName("connectionString")
             Dim i As Integer
             For i = 0 To elemList.Count - 1
-                Debug.WriteLine(elemList(i).InnerXml)
+                Console.WriteLine(elemList(i).InnerXml)
                 gl.ConnectString = Trim(elemList(i).InnerXml)
             Next i
+
+            'Get the connection string in decrypted form
+            elemList = xmlDoc.GetElementsByTagName("FTPHost")
+            gl.FTPHost = Trim(elemList(0).InnerXml)
+
+            elemList = xmlDoc.GetElementsByTagName("FTPUser")
+            gl.FTPUser = Trim(elemList(0).InnerXml)
+
+            elemList = xmlDoc.GetElementsByTagName("FTPPwd")
+            gl.FTPPwd = Trim(elemList(0).InnerXml)
+
+            elemList = xmlDoc.GetElementsByTagName("FTPKey")
+            gl.FTPKey = Trim(elemList(0).InnerXml)
+
+            Debug.Print(gl.FTPKey)
 
         Catch e As Exception
             WriteError("Error in GetParams " & e.Message)

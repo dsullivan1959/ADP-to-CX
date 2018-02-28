@@ -11,6 +11,10 @@
     Public Shared sSupportAddress
     Public Shared sFromAddress
     Public Shared cJobCollection As New Microsoft.VisualBasic.Collection()
+    Public Shared sFTPHost As String
+    Public Shared sFTPUser As String
+    Public Shared sFTPPwd As String
+    Public Shared sFTPKey As String
 
     Public Property SmtpMailHost() As String
         Get
@@ -109,5 +113,45 @@
             cJobCollection = Value
         End Set
     End Property
+
+    Public Property FTPHost() As String
+        Get
+            FTPHost = sFTPHost
+        End Get
+        Set(ByVal Value As String)
+            sFTPHost = Value
+        End Set
+    End Property
+
+    Public Property FTPUser() As String
+        Get
+            FTPUser = sFTPUser
+        End Get
+        Set(ByVal Value As String)
+            sFTPUser = Value
+        End Set
+    End Property
+
+    Public Property FTPPwd() As String
+        Get
+            FTPPwd = sFTPPwd
+        End Get
+        Set(ByVal Value As String)
+            sFTPPwd = Value
+        End Set
+    End Property
+
+    Public Property FTPKey() As String
+        Get
+            FTPKey = sFTPKey
+        End Get
+        Set(ByVal Value As String)
+            sFTPKey = Value
+        End Set
+    End Property
+
+
+
+
 
 End Class
