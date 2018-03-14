@@ -5,7 +5,7 @@
 
 <FTPHost>sftp.carthage.edu</FTPHost>
 <FTPUser>adpftp</FTPUser>
-<FTPPwd>"Ljbw'y2/Q@JZ" & Chr(34) & "j!x</FTPPwd>
+<FTPPwd>Ljbw'y2/Q@JZ"j!x</FTPPwd>
 <FTPKey>ssh-ed25519 256 geekVbRNK4cajjjmZjo0GSRM3grz1oYJRcUNIBN+KHo=</FTPKey>
 
 </root>
