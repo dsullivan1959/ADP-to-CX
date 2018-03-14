@@ -41,12 +41,7 @@ Module SubMain
         Dim xmlDoc As New XmlDocument()
         Dim crpt As String = ""
         Dim savecrpt As String = ""
-        'Dim ipos As Integer
-        '        Dim sDataPath As String
-        'Dim AppPath As String
 
-
-        'AppPath = My.Application.Info.DirectoryPath
 
         'The connection string will be encrypted in a file within the project
         'sConnectString = "Dsn=" & sDsn & ";Driver=" & sDriver & ";Host=" & sHost & ";Server=" & sServer & ";Service=" & sService & ";Protocol=" & sProtocol & ";Database=" & sDataBase & ";Uid=" & sUid & ";Pwd=" & sPwd & ";"
@@ -107,7 +102,7 @@ Module SubMain
 
         Catch e As Exception
             WriteError("Error in cnctEncryption " & e.Message)
-            MsgBox("Error = " & e.Message & ", " & e.HelpLink)
+            '            MsgBox("Error = " & e.Message & ", " & e.HelpLink)
             Debug.WriteLine(e.Message & ", " & e.HelpLink)
             CnctEncryption = vbCancel
         End Try
@@ -151,6 +146,7 @@ Module SubMain
                 myprocess.WaitForExit()
                 MsgBox("Saved")
 
+
                 xmlDoc.Load(PWDfile)
                 clsEncryption.Encrypt(xmlDoc, "Password", "EncryptedElement1", rsaKey, "rsaKey")
                 xmlDoc.Save(PWDfile)
@@ -172,8 +168,8 @@ Module SubMain
             pwdEncryption = vbOK
 
         Catch e As Exception
-            'WriteError("Error in GetParams " & e.Message)
-            Debug.WriteLine(e.Message)
+            WriteError("Error in GetParams " & e.Message)
+            ' Debug.WriteLine(e.Message)
             pwdEncryption = vbCancel
         End Try
 

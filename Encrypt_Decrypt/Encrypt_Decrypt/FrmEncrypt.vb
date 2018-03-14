@@ -22,9 +22,8 @@
     Private Sub BtnChngPwd_Click(sender As Object, e As EventArgs) Handles BtnChngPwd.Click
 
         sAction = "EditPassword"
-        FrmFileSelect.btnBrowse.Enabled = True
-        FrmFileSelect.btnSubmit.Enabled = True
-
+        FrmFileSelect.btnBrowse.Enabled = False
+        FrmFileSelect.btnSubmit.Enabled = False
 
         FrmFileSelect.Show()
 

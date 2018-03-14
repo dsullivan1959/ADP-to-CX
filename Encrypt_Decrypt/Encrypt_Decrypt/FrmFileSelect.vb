@@ -1,7 +1,7 @@
 ﻿Public Class FrmFileSelect
     Private bfileselected As Boolean = False
     Private bfirstload As Boolean = True
-    Private Shared sWorkingFile = My.Application.Info.DirectoryPath & "\connect - Copy.xml"
+    Private Shared sWorkingFile = My.Application.Info.DirectoryPath & "\connect.xml"
 
     Private Sub txtFile_TextChanged(sender As Object, e As EventArgs) Handles txtFile.TextChanged
         If bFirstLoad = False Then
@@ -35,7 +35,9 @@
 
         Try
             If TxtEnterPWD.Text <> frmEncrypt.sPwd Then
-                MsgBox("Wrong Password " & frmEncrypt.sPwd & " " & TxtEnterPWD.Text, MsgBoxStyle.RetryCancel)
+                ' MsgBox("Wrong Password " & frmEncrypt.sPwd & " " & TxtEnterPWD.Text, MsgBoxStyle.RetryCancel)
+                MsgBox("Wrong Password", MsgBoxStyle.RetryCancel)
+
             Else
                 If Me.txtFile.Text = "" Then
                     MsgBox("Select a file", MsgBoxStyle.RetryCancel)
@@ -53,8 +55,8 @@
                         End If
                         'End If
                     ElseIf frmEncrypt.sAction = "EditConnect" Then
-                        If sWorkingFile.Substring(sWorkingFile.Length - 11, 11) <> "connect.xml" And _
-                            sWorkingFile.Substring(sWorkingFile.Length - 18, 18) <> "connect - copy.xml" Then
+                        If sWorkingFile.Substring(sWorkingFile.Length - 11, 11) <> "connect.xml" Then
+                            'And sWorkingFile.Substring(sWorkingFile.Length - 18, 18) <> "connect - copy.xml" Then
                             MsgBox("wrong file")
                         Else
                             iRslt = CnctEncryption(sWorkingFile, "DE")
@@ -70,7 +72,7 @@
             End If
         Catch ex As Exception
             WriteError("Error in btnSubmit_Click event " & ex.Message)
-            Debug.WriteLine(ex.Message)
+            ' Debug.WriteLine(ex.Message)
 
         Finally
         End Try
@@ -81,7 +83,7 @@
     Private Sub FrmFileSelect_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         bfirstload = True
         If frmEncrypt.sAction = "EditConnect" Then
-            Me.txtFile.Text = My.Application.Info.DirectoryPath & "\connect - Copy.xml"
+            Me.txtFile.Text = My.Application.Info.DirectoryPath & "\connect.xml"
         ElseIf frmEncrypt.sAction = "EditPassword" Then
             Me.txtFile.Text = My.Application.Info.DirectoryPath & "\password.xml"
         End If
@@ -150,4 +152,7 @@
 
     End Sub
 
+    Private Sub TxtEnterPWD_TextChanged(sender As Object, e As EventArgs) Handles TxtEnterPWD.TextChanged
+        Me.btnSubmit.Enabled = True
+    End Sub
 End Class

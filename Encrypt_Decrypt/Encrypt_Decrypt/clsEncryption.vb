@@ -258,7 +258,7 @@ Public Class clsEncryption
             '//////////////////////////////////////////////////
             EncryptedXml.ReplaceElement(elementToEncrypt, edElement, False)
         Catch e As Exception
-            '            WriteError("Error in clsEncyption.Encrypt  " & e.Message)
+            WriteError("Error in clsEncyption.Encrypt  " & e.Message)
 
             ' re-throw the exception.
             Throw
@@ -368,7 +368,7 @@ Public Class clsEncryption
             '//////////////////////////////////////////////////
             EncryptedXml.ReplaceElement(elementToEncrypt, edElement, False)
         Catch e As Exception
-            '            WriteError("Error in clsEncyption.Encrypt  " & e.Message)
+            WriteError("Error in clsEncyption.Encrypt  " & e.Message)
 
             ' re-throw the exception.
             Throw
@@ -406,8 +406,7 @@ Public Class clsEncryption
             ' Decrypt the element.
             exml.DecryptDocument()
         Catch e As Exception
-            MsgBox("Decrypt" & e.Message)
-            '            WriteError("Error in clsEncyption.Encrypt  " & e.Message)
+            WriteError("Error in clsEncyption.Encrypt  " & e.Message)
             ' re-throw the exception.
             Throw
         Finally
