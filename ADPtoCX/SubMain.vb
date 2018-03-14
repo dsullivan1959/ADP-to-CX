@@ -1,7 +1,6 @@
 Option Strict Off
 Option Explicit On
 
-
 Imports System
 Imports System.Object
 Imports System.Configuration
@@ -67,6 +66,7 @@ Module SubMain
             Call QryCSV()
 
             Try
+
                 '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 'Encrypt
                 'Do we need to do this at all?  IF no SSN returned?
@@ -80,8 +80,6 @@ Module SubMain
                 'Dim wrapper As New EncryptTxt(password)
                 'Dim cipherText As String = wrapper.EncryptData(plainText)
                 'My.Computer.FileSystem.WriteAllText(sFullFileNamePath, cipherText, False)
-
-
 
                 'decrypt
                 'cipherText = My.Computer.FileSystem.ReadAllText(My.Computer.FileSystem.SpecialDirectories.MyDocuments & "\cipherText.txt")
@@ -106,8 +104,6 @@ Module SubMain
                     File.Delete(sFullFileNamePath)
                 End If
 
-                'IF SSN is included, may need to encrypt and decrypt my files
-                'So probably would encrypt at this point, and decrypt just before the file compare.
 
             Catch e As Exception
                 WriteError("Error in Main.  Error = " & e.Message)
@@ -150,6 +146,7 @@ Module SubMain
     Public Sub QryCSV()
         Dim c As New clsCSV
         Dim tbl As New DataTable
+        Dim tbl_all As New DataTable
         Dim oldTbl As New DataTable
         Dim ChangeTbl As New DataTable
         Dim foundRows() As DataRow
@@ -168,9 +165,11 @@ Module SubMain
         Dim rowAsArray2 As String = ""
         Dim equal As Boolean = True
 
-
+        Dim frmStatus As New Frm1
 
         Try
+
+
 
 
             ''+++++++++++++++++++++++++++++++++++++++++++
@@ -213,12 +212,18 @@ Module SubMain
 
             ''+++++++++++++++++++++++++++++++++++++++++++
             ''+++++++++++++++++++++++++++++++++++++++++++
-            'tbl = c.CsvToTable("\\10.7.118.112\ADP_CX_PROG\bin\DataFiles\ADP to CX.csv")
 
 
-            tbl = c.CsvToTable(gl.FileNamePath & gl.FileIn)
+            'In case of duplicate records, get full table, then do select distinct
+            tbl_all = c.CsvToTable(gl.FileNamePath & gl.FileIn)
             oldTbl = c.CsvToTable(gl.FileNamePath & gl.OldFile)
 
+            Dim view As DataView = New DataView(tbl_all)
+
+            'select distinct into working table
+            tbl = view.ToTable(True)
+
+            tbl_all = Nothing
 
             If tbl.Rows.Count > 0 Then
                 frmStatus.Show()
@@ -232,9 +237,6 @@ Module SubMain
                 For i As Integer = 0 To tbl.Rows.Count - 1
                     rowAsArray = ""
                     rowAsArray2 = ""
-                    'If i = 1309 Then
-                    '    WriteLog(i)
-                    'End If
 
                     If i = 0 Then
                         'do nothing - ignore header line
@@ -261,8 +263,9 @@ Module SubMain
                         expression = "Column1 = " & ConvertString(sFile) & " and column59 = " & ConvertString(sPayCode) & " and column66 = " & ConvertString(sPCN) ' 65 is the PCN Code, 
                         'Compare two csv files using the file number as the key
                         ' Use the Select method to find all rows matching the filter.
+                        'foundRows = oldTbl.Select(expression)
                         foundRows = oldTbl.Select(expression)
-                        
+
                         'If a failure occurs, how will the fix happen?   If I overwrite the "Last" csv, then the change won't be picked up the next day.
                         'One option would be to create a third file with failures, write the the table row to a csv file
                         'The next day, read that file and do something with it, delete the record if success occurs.
@@ -271,6 +274,7 @@ Module SubMain
                         If foundRows.Length = 0 Then
                             Debug.WriteLine(tbl.Rows(i)(0).ToString)
                             'This is a brand new record - add to all tables
+                            Call WriteCC_ADP(tbl.Rows(i))
                             Call ParseADPData(tbl.Rows(i))
                         Else
                             'If there is an employee match, determine if anything has changed in the file
@@ -290,6 +294,7 @@ Module SubMain
                                 'No change - move on to the next record
                             Else
                                 'See if the two arrays are the same - no data changed
+                                Call WriteCC_ADP(tbl.Rows(i))
                                 Call ParseADPData(tbl.Rows(i))
 
                             End If
@@ -300,10 +305,10 @@ Module SubMain
 
                         iCnt = iCnt + 1
                     End If
-                        totCnt = totCnt + 1
-                        frmStatus.txtCount.Text = totCnt.ToString & " of " & tbl.Rows.Count.ToString
-                        frmStatus.ProgressBar1.Value = totCnt
-                        frmStatus.Refresh()
+                    totCnt = totCnt + 1
+                    frmStatus.txtCount.Text = totCnt.ToString & " of " & tbl.Rows.Count.ToString
+                    frmStatus.ProgressBar1.Value = totCnt
+                    frmStatus.Refresh()
                 Next  'Loop for new file to test against old
 
             End If
@@ -350,7 +355,7 @@ Module SubMain
         Dim clsPos As New ClsPos_rec
         Dim clsProf As New clsProfile_rec
         Dim sMl As New SendMessage
-
+        Dim clsPrvn As New clsProvision
         Dim sql As String
         Dim iCarthId As Integer
         Dim Row1 As String
@@ -366,8 +371,10 @@ Module SubMain
         ' New for provisioning
         '++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         'Try
-        '    ' Write the entire row to the ADP_rec table for provisioning
+        '    '    ' Write the entire row to the ADP_rec table for provisioning
         'Catch ex As Exception
+
+        'Finally
 
         'End Try
         '++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -415,8 +422,13 @@ Module SubMain
             'Don't do anything with Faculty except make sure CVID is populated
             'DPW is student - there are no job PCN codes in ADP and CX is the "home" of that info
             'Only check  CVID for DPW
+            'New code VKH is for Adjuncts - process all? 
 
-            If (sJobCode = "K97") Or (sJobCode = "FVW" And sFacStaffFlag = "Staff") Then
+            If sJobCode = "VKH" Then
+                Debug.WriteLine(sJobCode = "VKH")
+            End If
+
+            If (sJobCode = "K97") Or (sJobCode = "VKH") Or (sJobCode = "FVW" And sFacStaffFlag = "Staff") Then
                 clsID.Initialize()
                 clsID.ID = Val(fileFields(1))   ' This field is mostly unpopulated.  How do we get the ID?
 
@@ -525,7 +537,7 @@ Module SubMain
 
             End If
 
-            If (sJobCode = "K97") Or (sJobCode = "FVW" And sFacStaffFlag = "Staff") Then
+            If (sJobCode = "K97") Or (sJobCode = "VKH") Or (sJobCode = "FVW" And sFacStaffFlag = "Staff") Then
                 'then deal with profile rec
                 'Most of this we won't have at this point.
                 'Danger of overwriting existing info. 
@@ -646,7 +658,7 @@ Module SubMain
 
             'Deal with the main job record..
 
-            If (sJobCode = "K97") Or (sJobCode = "FVW" And sFacStaffFlag = "Staff") Then
+            If (sJobCode = "K97") Or (sJobCode = "VKH") Or (sJobCode = "FVW" And sFacStaffFlag = "Staff") Then
                 Dim sLeaveDate As String = ""
                 Dim sLeaveEnd As String = ""
                 sLeaveDate = fileFields(76)
@@ -1534,6 +1546,7 @@ Module SubMain
     End Function
 
 
+
     Public Sub WriteLog(ByVal msg As String)
         FileOpen(10, My.Application.Info.DirectoryPath & "\ADPLog.txt", OpenMode.Append)
         PrintLine(10, msg & ", " & Format(Now, "MM/dd/yyyy HH:MM:ss"))
@@ -1542,11 +1555,11 @@ Module SubMain
 
 
     Public Function WriteError(ByVal msg As String)
-        FileOpen(10, My.Application.Info.DirectoryPath & "\ErrorLog.txt", OpenMode.Append)
-        PrintLine(10, msg & ", " & Format(Now, "MM/dd/yyyy HH:MM:ss"))
-        Dim sMsg As New SendMessage
-        'Call sMsg.SendEMessage("ADP to CX Error", msg, gl.FromAddress, gl.ToAddress, "")
-        FileClose(10)
+        'FileOpen(10, My.Application.Info.DirectoryPath & "\ErrorLog.txt", OpenMode.Append)
+        'PrintLine(10, msg & ", " & Format(Now, "MM/dd/yyyy HH:MM:ss"))
+        'Dim sMsg As New SendMessage
+        ''Call sMsg.SendEMessage("ADP to CX Error", msg, gl.FromAddress, gl.ToAddress, "")
+        'FileClose(10)
         WriteError = 1
     End Function
 
@@ -1601,10 +1614,10 @@ Module SubMain
         v = NativeMethods.GetPrivateProfileString("CX", "OldFile", "", RetVal, 255, My.Application.Info.DirectoryPath & "\params.ini")
         gl.OldFile = CStr(Left(RetVal, v))
 
-        v = NativeMethods.GetPrivateProfileString("CX", "crpt", "", RetVal, 255, My.Application.Info.DirectoryPath & "\params.ini")
-        crpt = CStr(Left(RetVal, v))
-        v = NativeMethods.GetPrivateProfileString("CX", "savecrpt", "", RetVal, 255, My.Application.Info.DirectoryPath & "\params.ini")
-        savecrpt = CStr(Left(RetVal, v))
+        'v = NativeMethods.GetPrivateProfileString("CX", "crpt", "", RetVal, 255, My.Application.Info.DirectoryPath & "\params.ini")
+        'crpt = CStr(Left(RetVal, v))
+        'v = NativeMethods.GetPrivateProfileString("CX", "savecrpt", "", RetVal, 255, My.Application.Info.DirectoryPath & "\params.ini")
+        'savecrpt = CStr(Left(RetVal, v))
 
         v = NativeMethods.GetPrivateProfileString("CX", "fromaddress", "", RetVal, 255, My.Application.Info.DirectoryPath & "\params.ini")
         gl.FromAddress = CStr(Left(RetVal, v))
@@ -1637,7 +1650,7 @@ Module SubMain
         Dim rsaKey As New RSACryptoServiceProvider(cspParams)
         Try
             xmlDoc.PreserveWhitespace = True
-            xmlDoc.Load("connect - copy.xml")   'In the bin/debug folder
+            xmlDoc.Load("connect.xml")   'In the bin/debug folder
 
             'DECRYPT
             clsEncryption.Decrypt(xmlDoc, rsaKey, "rsaKey")
@@ -1688,29 +1701,35 @@ Module SubMain
         Dim iPos As Integer = 0
         Dim iPos2 As Integer = 0
 
-        iPos = InStr(sValue, "/")
-        iPos2 = InStrRev(sValue, "/")
-        m = Left(sValue, iPos - 1)
-        If Len(m) < 2 Then
-            m = "0" & m
+        If sValue <> "" And IsDBNull(sValue) = False Then
+
+            iPos = InStr(sValue, "/")
+            iPos2 = InStrRev(sValue, "/")
+            m = Left(sValue, iPos - 1)
+            If Len(m) < 2 Then
+                m = "0" & m
+            End If
+
+            d = Mid(sValue, iPos + 1, (iPos2 - iPos) - 1)
+            If Len(d) < 2 Then
+                d = "0" & d
+            End If
+
+            Y = Right(sValue, Len(sValue) - iPos2)
+            'If Val(Y) > 50 Then
+            '    Y = "19" & Y
+            'Else
+            '    Y = "20" & Y
+            'End If
+
+
+            'sAns = Y & "-" & m & "-" & d   'fORMATTING IN THE OLD SQL METHOD IS DIFFERENT FROM THE COMMMAND ADDVALUE.  IT TAKES NORMAL DATES
+            sAns = m & "-" & d & "-" & Y
+            ConvertDATE = sAns
+        Else
+            ConvertDATE = ""
         End If
 
-        d = Mid(sValue, iPos + 1, (iPos2 - iPos) - 1)
-        If Len(d) < 2 Then
-            d = "0" & d
-        End If
-
-        Y = Right(sValue, Len(sValue) - iPos2)
-        'If Val(Y) > 50 Then
-        '    Y = "19" & Y
-        'Else
-        '    Y = "20" & Y
-        'End If
-
-
-        'sAns = Y & "-" & m & "-" & d   'fORMATTING IN THE OLD SQL METHOD IS DIFFERENT FROM THE COMMMAND ADDVALUE.  IT TAKES NORMAL DATES
-        sAns = m & "-" & d & "-" & Y
-        ConvertDATE = sAns
     End Function
 
 
@@ -2228,6 +2247,124 @@ Module SubMain
             End If
             GC.Collect()
             Set_CellPhone = sTestVal
+        End Try
+    End Function
+
+    Public Function WriteCC_ADP(Row As DataRow) As Integer
+        Dim clsPrvn As New clsProvision
+
+        Try
+
+            clsPrvn.Initialize()
+
+            clsPrvn.FileNum = Row(0)
+            clsPrvn.CarthID = Row(1)
+            clsPrvn.LName = Trim(Row(2))
+            clsPrvn.FName = Row(3)
+            clsPrvn.MidName = Row(4)
+            clsPrvn.Salut = Row(5)
+            clsPrvn.PayrollName = Row(6)
+            clsPrvn.PrefName = Row(7)
+            clsPrvn.BDate = ConvertDATE(Row(8))
+            clsPrvn.Gender = Row(9)
+            clsPrvn.MrtStat = Row(10)
+            clsPrvn.RaceCode = Row(11)
+            clsPrvn.RaceDescr = Row(12)
+            clsPrvn.Ethn = Row(13)
+            clsPrvn.EthRaceIDMthd = Row(14)
+            clsPrvn.PersEmail = Row(15)
+            clsPrvn.PrimAddr1 = Row(16)
+            clsPrvn.PrimAddr2 = Row(17)
+            clsPrvn.PrimAddr3 = Row(18)
+            clsPrvn.PrimCity = Row(19)
+            clsPrvn.PrimState = Row(20)
+            clsPrvn.PrimStateDesc = Row(21)
+            clsPrvn.PrimZip = Row(22)
+            clsPrvn.PrimCnty = Row(23)
+            clsPrvn.PrimCntry = Row(24)
+            clsPrvn.PrimCntryCode = Row(25)
+            clsPrvn.UseAsLegal = Row(26)
+            clsPrvn.HomePhone = Row(27)
+            clsPrvn.PersMobile = Row(28)
+            clsPrvn.WorkPhone = Row(29)
+            clsPrvn.WorkContPhone = Row(30)
+            clsPrvn.WorkEmail = Row(31)
+            clsPrvn.UseWrkEmlCont = Row(32)
+            clsPrvn.LegalAddr1 = Row(33)
+            clsPrvn.LegalAddr2 = Row(34)
+            clsPrvn.LegalAddr3 = Row(35)
+            clsPrvn.LegalCity = Row(36)
+            clsPrvn.LegalState = Row(37)
+            clsPrvn.LegalStateDesc = Row(38)
+            clsPrvn.LegalZip = Row(39)
+            clsPrvn.LegalCnty = Row(40)
+            clsPrvn.LegalCntry = Row(41)
+            clsPrvn.LegalCntryCode = Row(42)
+            clsPrvn.SSN = Row(43)
+            clsPrvn.HireDt = ConvertDATE(Row(44))
+            clsPrvn.HireReHireDt = ConvertDATE(Row(45))
+            clsPrvn.ReHireDt = ConvertDATE(Row(46))
+            clsPrvn.PosStart = ConvertDATE(Row(47))
+            clsPrvn.PosEffDt = ConvertDATE(Row(48))
+            clsPrvn.PosEffEnd = ConvertDATE(Row(49))
+            clsPrvn.TermDate = ConvertDATE(Row(50))
+            clsPrvn.PosStatus = Row(51)
+            clsPrvn.StatEffDt = ConvertDATE(Row(52))
+            clsPrvn.StatEffEndDt = ConvertDATE(Row(53))
+            clsPrvn.AdjServDt = ConvertDATE(Row(54))
+            clsPrvn.Archived = Row(55)
+            clsPrvn.PostnID = Row(56)
+            clsPrvn.PrimPos = Row(57)
+            clsPrvn.PayCompCod = Row(58)
+            clsPrvn.PayCompName = Row(59)
+            clsPrvn.CipCode = Row(60)
+            clsPrvn.WorkCatCode = Row(61)
+            clsPrvn.WorkCatDescr = Row(62)
+            clsPrvn.JobTtlCode = Row(63)
+            clsPrvn.JobTtlDescr = Row(64)
+            clsPrvn.HomeCostCode = Row(65)
+            clsPrvn.HomeCostDescr = Row(66)
+            clsPrvn.JobClassCode = Row(67)
+            clsPrvn.JobClassDescr = Row(68)
+            clsPrvn.JobDescr = Row(69)
+            clsPrvn.JobFuncCode = Row(70)
+            clsPrvn.JobFuncDescr = Row(71)
+            clsPrvn.RoomNmbr = Row(72)
+            clsPrvn.LocCode = Row(73)
+            clsPrvn.LocDescr = Row(74)
+            clsPrvn.LeaveStrDt = ConvertDATE(Row(75))
+            clsPrvn.LeaveRetDt = ConvertDATE(Row(76))
+            clsPrvn.HomeCostNum2 = Row(77)
+            clsPrvn.PayCompCode2 = Row(78)
+            clsPrvn.PosEffEndDt2 = ConvertDATE(Row(79))
+            clsPrvn.PosEffEndDt2 = ConvertDATE(Row(80))
+            clsPrvn.HomeCostNum3 = Row(81)
+            clsPrvn.PayCompCode3 = Row(82)
+            clsPrvn.PosEffDt3 = ConvertDATE(Row(83))
+            clsPrvn.PosEffEndDt3 = ConvertDATE(Row(84))
+            clsPrvn.HomeCostNum4 = Row(85)
+            clsPrvn.PayCompCode4 = Row(86)
+            clsPrvn.PosEffDt4 = ConvertDATE(Row(87))
+            clsPrvn.PosEffEndDt4 = ConvertDATE(Row(88))
+            clsPrvn.HomeDptNumCode = Row(89)
+            clsPrvn.HomeDptDescr = Row(90)
+            clsPrvn.SuprvID = Row(91)
+            clsPrvn.SuprvFName = Row(92)
+            clsPrvn.SuprvLName = Row(93)
+            clsPrvn.Date_Stamp = Format(Now(), "MM-dd-yyyy")
+
+
+            clsPrvn.Insert()
+
+
+            'Update should be unnecessary because of time stamp.
+            'clsPrvn.Update()
+
+        Catch ex As Exception
+            WriteError("Error in WriteCC_ADP.  File Number = " & Row(0) & "Error = " & ex.Message & ", " & ex.InnerException)
+            WriteCC_ADP = 0
+        Finally
+            WriteCC_ADP = 1
         End Try
     End Function
 

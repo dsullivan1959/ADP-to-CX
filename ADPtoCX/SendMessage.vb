@@ -37,7 +37,7 @@ Public Class SendMessage
             client.Port = 25
 
             'Send the e-mail message
-            ' client.Send(message)
+            'client.Send(message)
         Catch e As Exception
             WriteError("Error in SendEMessage.  Error = " & e.Message)
         End Try

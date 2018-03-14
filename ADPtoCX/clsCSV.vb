@@ -36,6 +36,7 @@
                 parser.TrimWhiteSpace = True
 
 
+
                 While Not parser.EndOfData
                     AddValuesToTable(parser.ReadFields, result)
                 End While
